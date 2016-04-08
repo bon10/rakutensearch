@@ -15,7 +15,7 @@ end
 post '/search' do
   uri = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222"
   res = Net::HTTP.post_form((URI.parse uri),
-    {'applicationId': ENV["applicationId"],
+    { 'applicationId': ENV["applicationId"],
      'affiliateId': "0641f941.17ca8956.0641f942.e1c0fb28",
      'keyword': params["keyword"],
      'imageFlg': params["imageFlg"],
@@ -25,7 +25,7 @@ post '/search' do
      'pointRate': params["pointRate"],
      'creditCardFlag': params["creditCardFlag"],
      'page': params["page"]
-     }
+    }
   )
   #logger.info res.body
   return res.body
