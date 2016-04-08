@@ -1,10 +1,8 @@
 require 'sinatra'
 require 'sinatra/cross_origin'
-require 'logger'
 require 'net/http'
 
 configure do
-  logger = Logger.new('sinatra.log')
   enable :cross_origin
 end
 
