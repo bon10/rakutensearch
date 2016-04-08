@@ -19,6 +19,7 @@ PLATFORMS
 
 DEPENDENCIES
   foreman
+  rack (= 1.6.0)
   sinatra
   sinatra-cross_origin
 
