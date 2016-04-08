@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+  
+<html xmlns="http://www.w3.org/1999/xhtml">  
+<head>
+  <meta charset="UTF-8">
+  <title>Yahoo API - Shopping Search </title>  
+  <style type="text/css">  
+    body { font-size: 76%; }  
+    .loading {display:none;}
+    .loading img {position:absolute; left:5px;}
+    span.loading {position:absolute; margin: 5px 0 0 20px;}
+
+  </style>   
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>   
+
+  <script type="text/javascript">
+  
+  /*
+   * 共通変数
+   */
+  var intervalId = -1;
+  var index = 0;	// 既に表示した商品の位置xを示す(nページのx位置)
+  var listCnt = index;	// リスト表示件数
+  var cnt= 0;
+  var html='';
+  var url = '';
+  var selectPoint=0;
+  var params={};
+  var searchCnt=0;  // 検索回数
+
+  // 検索メソッド
+  function search(){
+
+   if (intervalId > -1) {
+        clearInterval(intervalId);
+        intervalId = -1;
+        
+    }
+   var query = $('#txtQuery').val();
+
+    $.ajax({
+      url : 'http://pipes.yahoo.com/pipes/pipe.run',
+      data: {  
+          //appid: '6bMIIQWxg67ihlRFgAZ6pcBWzCEkuFI.oeQ31EQl6SSvLg9Cvso0NFXXbws6gyQj9IE-',  
+          query: query,  
+          offset: index,  
+          //hits: '50',  
+          //affiliate_type:'yid',
+          //affiliate_id: '34Y6tnJkTqMSonQCvvHaPao-',
+          //availability: "1",
+          //type: "any"
+          _id: "9291eb0e594e5d050441990967c16a82",
+          _render: "json"
+      },
+      dataType: 'jsonp',
+      jsonp: '_callback',
+      // 通信終了時の処理
+      complete: function(){
+      },
+      //通信が成功した場合の処理 (JSONPのコールバック関数はこれが呼ばれます)
+      success: function(data, status){
+
+            var result = data.value.items[0];
+            // JSONの取得が成功したときに呼ばれるメソッド
+            if (!data) return;  
+            if (!result) return;   
+            var count = result.totalResultsAvailable;
+
+            // 最初の1回目の検索時に追記
+            if(searchCnt==0){
+              html += '<strong>ヒット件数：'+count + '</strong>件<br>';
+            }
+              var searchResultItems ='';
+            searchResultItems = searchResultItems.concat(result.Result.Hit);
+            $.each(result.Result.Hit, function(i, item) {
+              if (item.Name) {
+                var code = item.Code;  
+                var name = item.Name;  
+                var desc = item.Description; 
+                var price = item.Price ? parseInt(item.Price.content).toCurrency()+'円' : 'n/a';  
+                var shipping = item.Shipping ? item.Shipping.Name : 'n/a';  
+                var availability = item.Availability == 'instock' ? '在庫有' : '在庫無' ;  
+                var imgUrl = item.ExImage.Url ? item.ExImage.Url : '';  
+	        			var pointTime = item.Point.Times;
+                var url = item.Url;
+
+                /************
+                 * ユーザの条件指定により分岐
+                 ***********/
+
+			  				if(pointTime >= parseInt(selectPoint)){
+	              	html +=
+	              	     '<a href="' + url + '" target="_blank"><img src="' + imgUrl + '" alt="" boder ="0" align="left"/>'  
+	              	     +'' + name + '</a><br />'  
+	                     + '<span style="color:red; font-weight: bold;font-size:18px;">' + price + '</span>,ポイント '
+			         				 + pointTime + '倍<br />'
+	                     + shipping + ', ' + availability + '<br />'  
+	                     + desc + '<br clear="all"/>'  
+	                     + '<hr/>';
+                  listCnt ++;
+                }
+              }
+            }); // end of each 
+            searchCnt++;
+            check();
+       }
+    });
+  }
+
+  function check(){
+    if (listCnt < 10) {
+      index +=50;
+      //1.1秒後に実行(api制限１秒に１回)
+      intervalId = setInterval(search, 1100);
+    }
+    else {
+      $('.loading').hide();
+      $('#results').empty().html(html);  
+    }
+  }
+  
+
+    $(function() {          
+        $('#btnSearch').click(function() {
+
+          // 入力チェック
+          selectPoint = $('#selectPoint').val();
+          if(selectPoint.length==0){
+            selectPoint=0;  // 入力なしの場合は0とする 
+          }
+          if(String(selectPoint).match(/^0[0-9]/)||String(selectPoint).match(/[^0-9]/g) || (selectPoint<0 || selectPoint>10)){
+            alert("ポイントは半角数字「0～10」の間で入力してくだしあ\n※先頭に「0」をつけてもダメです！");
+            return;
+          }
+
+        $('#results').empty();
+        $('.loading').show();         
+        html='';  // 検索結果を初期化
+        $('#results').empty();
+        listCnt=0; // リスト件数も初期化
+        searchCnt=0;  // 検索回数も初期化
+        search();
+      }); // end of click
+
+    });  // end of jQuery  
+  
+  
+    /*************** 
+    ** Helper methods 
+    ****************/  
+  
+    String.prototype.reverse = function() {  
+      return this.split("").reverse().join("");  
+    };  
+  
+    Number.prototype.withCommas = function() {  
+      var x = 3;  
+      var y = parseFloat(this).toString().reverse();  
+      while (x < y.length) {  
+        y = y.substring(0, x) + "," + y.substring(x); 1  
+        x += 4;  
+      }  
+      return y.reverse(); 
+    };  
+  
+    Number.prototype.toCurrency = function() {  
+      return (arguments[0] ? arguments[0] : "") + this.withCommas();  
+    };      
+      
+  </script>  
+</head>  
+<body>  
+  <h1>Yahoo!ショッピングの検索対象のアイテムから、ポイント倍率指定分の商品を表示するよ！</h1>
+  <p>時間がかかるのは仕様です。本当にありがとうございます。</p>
+  <strong>検索文字列：</strong><input id="txtQuery" type="text" value="カーディガン" />
+  <strong>ポイント倍率(特に指定しない場合は空欄or0を入力)：</strong>
+  <input id="selectPoint" type="text" />
+  <div class="alertSelP" title="Fade in at showing."></div>
+  <!-- <SELECT id="selectConditions" title="testest">
+    <OPTION value="1" selected>と等しい</OPTION>
+    <OPTION value="2">以上</OPTION>
+    <OPTION value="3">以下</OPTION>
+  </SELECT> -->
+
+  <input id="btnSearch" type="button" value="検索" /><br />
+  <div class="loading"><img src="loading.gif" alt="loading" /><span class="loading">loading...</span></div>  
+  <br /><br />  
+  <div id="results"></div>
+</body>  
+</html> 

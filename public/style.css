@@ -1,0 +1,133 @@
+@charset "utf-8";
+/************************************************
+ *  create by bon at 2012.11
+ ************************************************/
+html,body{
+  margin:0; 
+  height:100%;
+}
+
+#header {
+  background:#EEE;
+  font-size:48px;
+}
+
+#container {
+  margin: 0 auto;
+  height: auto !important;
+  height: 100%;
+  position:relative;
+ 
+}
+
+#items {
+  padding-top:20px;  
+}
+
+.image {
+  float:left;
+}
+
+.text {
+  float:left;
+  margin:0 0 0 30px;
+  
+}
+
+.price {
+  font-weight:bold;
+  color:#FF0000;
+}
+
+.page-top {
+  background: #DDD;
+  text-align: center;
+  width: 100px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 20px 0;
+  text-decoration:none;
+  color:#000;
+}
+
+.page-top:hover {
+  background:#EEE;
+}
+
+.search {
+  background: #EEE;
+  margin: 10px 0 0 0;
+  padding: 10px;
+  border-left: 1px solid #DDD;
+  border-top: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+  overflow:hidden;
+}
+
+.detail {
+  text-decoration:none;
+  vertical-align: sub;
+  margin-top:-1px;
+  padding:10px;
+  width:200px;
+  background:#eee;
+  border-left:1px solid #DDD;
+  border-right:1px solid #DDD;
+  border-bottom:1px solid #DDD;
+  border-radius:0 0 10px 10px;
+  position:relative;
+  height:20px;
+
+}
+
+.detail p {
+  position:absolute;
+  bottom:0;
+  left: 25%;
+}
+
+.search2 {
+ display:none;
+}
+
+#page {
+  margin: 30px;
+}
+
+
+.current {
+  padding:10px;
+}
+.pageNum{
+  padding: 10px;
+  border: 1px solid #DDD;
+  margin: 10px;
+  color:#0000FF;
+}
+
+
+.next,.prev {
+  text-align:right;
+  padding: 10px;
+  border: 1px solid #DDD;
+  color: #0000FF;
+  text-decoration:underline;
+}
+
+#fade {
+  position:absolute; /* ie6 */
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display:none;
+}
+#fade img{
+  position:absolute;
+  top: 50%;
+  left: 50%;
+}
+

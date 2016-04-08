@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>楽天商品検索</title>
+<link rel="stylesheet" href="style.css" media="all" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="jquery.ba-hashchange.min.js"></script>
+<script src="./js/rakutenweb.js"></script>
+</head>
+<body>
+        <header id="header">
+        <a href="rakuten.html">楽天商品検索</a>
+        </header>
+         
+        <div id="container">
+        	<strong>動作環境：</strong>Chrome23、Firefox15、AndroidOS4.1の標準ブラウザで検証済み。その他ブラウザは不明。IE8～9は1ページのみ検索可能です。<br>
+          <strong>動作について：</strong>ブラウザの「戻る」とか「進む」で可笑しな動きをする可能性があるので注意してください。<br>
+          <strong>検索について：</strong>漢字1文字はOK。それ以外の半角英数字やひらがな1文字のキーワード検索はNGです。<br>あと、半角スペースの複数キーワード検索もたまにエラーになるかも。<br>
+          例)　亜：OK　あ：NG<br>
+          <p><a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-count="none">ツイート</a>
+             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+          </p>
+          <div class="search">
+            検索キーワード：
+            <input type="TEXT" value="" size="50px" class="keyword" />
+            <input type="SUBMIT" id="send" value="検索" />
+            <div class="search2">
+              並び順：
+              <select name="sort" class="sort">
+                <option value="standard" selected>標準</option>
+				<option value="-reviewCount">口コミが多い順</option>
+				<option value="-reviewAverage">口コミの平均が高い順</option>
+				<option value="+itemPrice">価格が安い順</option>
+				<option value="-itemPrice">価格が高い順</option>
+				<option value="+updateTimestamp">新着順</option>
+			  </select><br>
+              ポイント倍数(2～10の整数を入力してください。入力無しはすべて対象になります)：
+              <input type="text" value="" size="10px" class="pointRate" /><br>
+              <input type="hidden" value="0" class="pointRateFlag" />
+              クレジットカードの利用有無：
+              <input type="radio" name="q1" class="creditCardFlag" value="0" checked />指定なし 
+              <input type="radio" name="q1" class="creditCardFlag" value="1"/> 有り<br>
+              
+              楽天カードの利用：
+              <input type="radio" name="q2" class="rakutenFlg" value="0" checked />無し 
+              <input type="radio" name="q2" class="rakutenFlg" value="1"/> 有り<br>
+            </div>
+          </div>
+          <div class="detail"><p>詳細検索する</p></div>
+          <p>
+            結果はココから下に出力されるよ！
+          </p>
+          <div id="items">
+          </div>
+          <p>
+          <!-- Rakuten Widget FROM HERE --><script type="text/javascript">rakuten_design="slide";rakuten_affiliateId="0642121d.f7660e3f.0642121e.f222dbbd";rakuten_items="ctsmatch";rakuten_genreId=0;rakuten_size="728x200";rakuten_target="_blank";rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="off";rakuten_genre_title="off";rakuten_recommend="on";</script><script type="text/javascript" src="http://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js"></script><!-- Rakuten Widget TO HERE -->
+          </p>
+          <div id="page">
+          
+          </div>
+          <div style="clear:both;"></div>
+          <a href="#" class="page-top">TOPへ</a>
+        </div>
+        <hr />
+        <footer id="footer">
+        <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
+<a href="http://webservice.rakuten.co.jp/" target="_blank">Supported by 楽天ウェブサービス</a>
+<!-- Rakuten Web Services Attribution Snippet TO HERE -->,produced by bon - (c) 2015.
+        </footer>
+        <div id="fade"><img src="ajax-loader.gif"></div>
+</body>
+</html>
