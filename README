@@ -1,9 +1,0 @@
-Environment Variables
-=====================
-You must set API KEY for the enviroment variables.  
-API KEY is register RAKUTEN Web API.
- 
- e.g Linux
-   export applicationId="XXXXXX"
-
-This app's default infrastructure is Openshift(sinatra). 
