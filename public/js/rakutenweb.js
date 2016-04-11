@@ -156,8 +156,8 @@
       $('#items').html(''); // 検索結果クリア
       $('#page').html('');
       
-      //url = "http://rakutensearch-bon10.rhcloud.com/search";
-      url = "http://bon.moe.hm:4567/search";
+      url = "http://rakutensearch-bon10.rhcloud.com/search";
+      //url = "http://bon.moe.hm:4567/search";
       $.post(url,
       	 {'keyword':keyword,'imageFlg':1,
       	  'availability':1,'sort':sort,'pointRateFlag':pointRateFlag,'pointRate':pointRate,'creditCardFlag':creditCardFlag,
